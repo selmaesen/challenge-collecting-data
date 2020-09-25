@@ -6,7 +6,7 @@ import json
 import csv
 
 #url for each property
-source = requests.get("https://www.immoweb.be/en/classified/house/for-sale/heusden/9070/8951214?searchId=5f6b3fa532fe7")
+source = requests.get("https://www.immoweb.be/en/classified/apartment-block/for-sale/liege/4020/8775843?searchId=5f6ddbba25af1")
 
 soup = BeautifulSoup(source.text,'lxml')
 
@@ -23,12 +23,17 @@ house_detail = soup.findAll("table", {'class' : "classified-table"})
 
 item = []
 itemvalue= []
+
+try :
     
-for j in range(len(house_detail)-1):
-    house_general= house_detail[j].findAll('tr')
-    for i in range(len(house_general)-1) : 
-        item.append(house_general[i].th.contents)
-        itemvalue.append(house_general[i].td.contents)
+    for j in range(len(house_detail)-1):
+        house_general= house_detail[j].findAll('tr')
+        for i in range(len(house_general)-1) : 
+            item.append(house_general[i].th.contents)
+            itemvalue.append(house_general[i].td.contents)
+
+except :
+    pass
 
 item_s = []
 itemvalue_s= []
@@ -47,7 +52,27 @@ property_info  = dict(zip(item_s,itemvalue_s))
 property_info['No_of_rooms'] = rooms
 property_info['Price'] = Price
 
-print(property_info)
+#print(property_info)
+
+
+
+#belgium = pd.DataFrame({'Locality': titles,
+#                           'Type of property' :
+#                           'Subtype of property' :
+#                           'Price': ,
+#                           'Type of sale' :
+#                           'Number of rooms': 
+#                           'Area(m²)': ,
+#                           'Fully equipped kitchen': ,
+#                           'Furnished : ,
+#                           'Open fire ': ,
+#                           'Terrace': ,
+#                           'facades': ,
+#                           'Swimming pool': 
+#                           'State of the building' : 
+#                                                    })[    ]
+#
+
 
 #test to write in csv file
 #with open('test.csv', 'w') as f:
