@@ -16,7 +16,7 @@ Price = p[1].text
 
 #No of Rooms
 no_of_rooms = soup.find("span", class_= "overview__text").text
-print(no_of_rooms.replace(" ",""))
+rooms = no_of_rooms.replace(" ","").strip()
 
 # All the Information about the property
 house_detail = soup.findAll("table", {'class' : "classified-table"})
@@ -44,10 +44,10 @@ for x in range(len(itemvalue)-1):
 #print(itemvalue_s)
 
 property_info  = dict(zip(item_s,itemvalue_s))
-property_info['No_of_rooms'] = no_of_rooms
+property_info['No_of_rooms'] = rooms
 property_info['Price'] = Price
 
-#print(Property_info)
+print(property_info)
 
 #test to write in csv file
 #with open('test.csv', 'w') as f:
