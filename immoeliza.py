@@ -2,38 +2,38 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import urllib3
+import json
+import csv
 
-
-source = requests.get("https://www.immoweb.be/en/classified/house/for-sale/heusden/9070/8951214?searchId=5f6b3fa532fe7")
+#url for each property
+source = requests.get("https://www.immoweb.be/en/classified/apartment-block/for-sale/liege/4020/8775843?searchId=5f6ddbba25af1")
 
 soup = BeautifulSoup(source.text,'lxml')
 
-house_container = soup.find("div", class_ = "classified__informations")
-house_data = house_container.text.replace("  ","")
-house_info = []
-house_info = house_data.split('\n')
-
+#Price
 p= soup.find_all('span')
 Price = p[1].text
 
-#working on house location
+#No of Rooms
+no_of_rooms = soup.find("span", class_= "overview__text").text
+rooms = no_of_rooms.replace(" ","").strip()
 
-#house_location = soup.find("div",{"class" : "classified__information--address"})
-print(house_location)
-
-
-
-
-house_details = soup.findAll("table", {'class' : "classified-table"})
+# All the Information about the property
+house_detail = soup.findAll("table", {'class' : "classified-table"})
 
 item = []
 itemvalue= []
+
+try :
     
-for j in range(len(house_details)-1):
-    house_general= house_details[j].findAll('tr')
-    for i in range(len(house_general)-1) : 
-        item.append(house_general[i].th.contents)
-        itemvalue.append(house_general[i].td.contents)
+    for j in range(len(house_detail)-1):
+        house_general= house_detail[j].findAll('tr')
+        for i in range(len(house_general)-1) : 
+            item.append(house_general[i].th.contents)
+            itemvalue.append(house_general[i].td.contents)
+
+except :
+    pass
 
 item_s = []
 itemvalue_s= []
@@ -48,10 +48,35 @@ for x in range(len(itemvalue)-1):
 
 #print(itemvalue_s)
 
-Property_info  = dict(zip(item_s,itemvalue_s))
-#print(Property_info)
+property_info  = dict(zip(item_s,itemvalue_s))
+property_info['No_of_rooms'] = rooms
+property_info['Price'] = Price
 
-#csv_file = open('cms_scrape.csv', 'w')
-#csv_writer = csv.writer(csv_file)
-#csv_writer.writerow('headline', 'summary','video_link')
+#print(property_info)
+
+
+
+#belgium = pd.DataFrame({'Locality': titles,
+#                           'Type of property' :
+#                           'Subtype of property' :
+#                           'Price': ,
+#                           'Type of sale' :
+#                           'Number of rooms': 
+#                           'Area(m²)': ,
+#                           'Fully equipped kitchen': ,
+#                           'Furnished : ,
+#                           'Open fire ': ,
+#                           'Terrace': ,
+#                           'facades': ,
+#                           'Swimming pool': 
+#                           'State of the building' : 
+#                                                    })[    ]
+#
+
+
+#test to write in csv file
+#with open('test.csv', 'w') as f:
+##    for key in property_info.keys():
+##        f.write("%s,%s\n"%(key,property_info[key]))
+#
 
