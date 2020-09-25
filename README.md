@@ -2,11 +2,11 @@
 
 This project is the first project for BeCode AI/Data Operotor training, Bouman class. Adam Flusse, Ankita Haldia and Selma Esen have worked on this repository.
  
-##Date
+## Date
 
 23/09/2020 - 25/09/2020
 
-##The Mission
+## The Mission
 
 The real estate company "ImmoEliza" wants to create a machine learning model to make price predictions on real estate sales in Belgium. You must therefore create a dataset that holds the following columns :
 
