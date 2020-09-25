@@ -126,7 +126,17 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    " \n"
+    "# open a cvs file\n",
+    "all_urls = open (\"country2.txt\",\"r\")\n",
+    "\n",
+    "sample=[\"#\", \"Location\", \"Price\",\"Type\", \"\\n\"]\n",
+    "f = open(\"immodata.csv\", \"a\")\n",
+    "f.write(\"#, Location, Price, Type, \\n\")\n",
+    "f.close()\n",
+    "\n",
+    "#read the all urls\n",
+    "\n",
+    "for line in \n"
    ]
   },
   {
